@@ -1,14 +1,18 @@
 require "rails_helper"
 
+min_date = Time.now - 25.years
+max_date = Time.now - 18.years
+rand(min_date..max_date)
+
 RSpec.describe "show_view" do
   let(:classroom) { Classroom.create(course_name: 'Math', semester: "Spring #{Time.now.year}") }
   let(:oldest_student) { Student.create(name: "Grandpa",
                         hometown: Faker::Address.city,
-                        birthday: Faker::Date.between(from: 30.years.ago, to: 29.years.ago)) }
+                        birthday: rand(min_date..max_date)) }
 
   before do
     5.times do
-    student = Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: Faker::Date.between(from: 25.years.ago, to: 18.years.ago))
+    student = Student.create(name: 'Bobby', hometown: Faker::Address.city, birthday: rand(min_date..max_date))
     end
     Student.all.each do |student|
       ClassroomStudent.create(student: student, classroom: classroom)
